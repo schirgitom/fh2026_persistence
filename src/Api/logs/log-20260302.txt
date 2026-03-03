@@ -1,0 +1,153 @@
+2026-03-02 19:18:33.707 +01:00 [INF] Connected to RabbitMQ at localhost:5672. Queue measurements.ingest bound to exchange aquarium.telemetry with routing key aquarium.measurements.
+2026-03-02 19:18:33.814 +01:00 [INF] RabbitMQ consumer started for queue measurements.ingest
+2026-03-02 19:18:34.442 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000001
+2026-03-02 19:18:34.550 +01:00 [INF] HTTP GET / responded 200 in 99.3753 ms
+2026-03-02 19:18:34.667 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000002
+2026-03-02 19:18:34.671 +01:00 [INF] HTTP GET /favicon.ico responded 404 in 0.5374 ms
+2026-03-02 19:18:54.916 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000003
+2026-03-02 19:18:54.927 +01:00 [INF] HTTP GET / responded 200 in 6.9883 ms
+2026-03-02 19:19:07.506 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000004
+2026-03-02 19:19:07.509 +01:00 [INF] HTTP GET /favicon.svg responded 404 in 0.1686 ms
+2026-03-02 19:19:07.698 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000005
+2026-03-02 19:19:07.710 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE7:00000001
+2026-03-02 19:19:07.752 +01:00 [INF] HTTP GET /graphql/nitro-config.json responded 200 in 39.2831 ms
+2026-03-02 19:19:08.304 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 602.0135 ms
+2026-03-02 19:19:08.443 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000006
+2026-03-02 19:19:08.566 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE7:00000002
+2026-03-02 19:19:08.951 +01:00 [INF] HTTP GET /assets/codicon.3b077754.Hscy-R9e.ttf responded 304 in 361.7190 ms
+2026-03-02 19:19:09.667 +01:00 [INF] HTTP GET /graphql/schema.graphql responded 200 in 1215.0374 ms
+2026-03-02 19:19:10.050 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE8:00000001
+2026-03-02 19:19:10.076 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 22.9163 ms
+2026-03-02 19:19:41.016 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE8:00000002
+2026-03-02 19:19:41.044 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 21.0730 ms
+2026-03-02 19:19:48.797 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE8:00000003
+2026-03-02 19:19:48.821 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 20.6276 ms
+2026-03-02 19:21:37.852 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE8:00000004
+2026-03-02 19:21:37.976 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 121.5263 ms
+2026-03-02 19:21:38.283 +01:00 [DBG] Correlation ID set to 0HNJOH0EQRSE5:00000007
+2026-03-02 19:21:38.475 +01:00 [INF] GraphQL latestMeasurement query for aquarium aq-1
+2026-03-02 19:21:39.011 +01:00 [INF] Applying EF Core migrations for aquarium aq-1
+2026-03-02 19:21:40.295 +01:00 [ERR] An error occurred using the connection to database 'aquarium_aq_1' on server 'tcp://localhost:5433'.
+2026-03-02 19:21:40.976 +01:00 [INF] Executed DbCommand (336ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE DATABASE aquarium_aq_1;
+2026-03-02 19:21:41.179 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2026-03-02 19:21:41.232 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2026-03-02 19:21:41.251 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 19:21:41.286 +01:00 [INF] Applying migration '20260224141649_InitialMeasurementSchema'.
+2026-03-02 19:21:41.316 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE measurements (
+    aquarium_id text NOT NULL,
+    timestamp timestamptz NOT NULL,
+    temperature numeric,
+    mg numeric,
+    kh numeric,
+    ca numeric,
+    ph numeric,
+    oxygen numeric,
+    pump numeric,
+    CONSTRAINT "PK_measurements" PRIMARY KEY (aquarium_id, timestamp)
+);
+2026-03-02 19:21:41.326 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX ix_measurements_aquarium_timestamp_desc ON measurements (aquarium_id, timestamp DESC);
+2026-03-02 19:21:41.332 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX ix_measurements_timestamp ON measurements (timestamp);
+2026-03-02 19:21:41.338 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20260224141649_InitialMeasurementSchema', '9.0.0');
+2026-03-02 19:21:41.364 +01:00 [INF] Querying latest measurement for aquarium aq-1
+2026-03-02 19:21:41.862 +01:00 [INF] Executed DbCommand (82ms) [Parameters=[@__aquariumId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.aquarium_id, m.timestamp, m.temperature, m.mg, m.kh, m.ca, m.ph, m.oxygen, m.pump
+FROM measurements AS m
+WHERE m.aquarium_id = @__aquariumId_0
+ORDER BY m.timestamp DESC
+LIMIT 1
+2026-03-02 19:21:41.951 +01:00 [INF] HTTP POST /graphql responded 200 in 3665.1578 ms
+2026-03-02 19:22:41.736 +01:00 [INF] Connected to RabbitMQ at localhost:5672. Queue measurements.ingest bound to exchange aquarium.telemetry with routing key aquarium.measurements.
+2026-03-02 19:22:41.795 +01:00 [INF] RabbitMQ consumer started for queue measurements.ingest
+2026-03-02 19:22:42.307 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25G:00000001
+2026-03-02 19:22:42.385 +01:00 [INF] HTTP GET / responded 200 in 65.4086 ms
+2026-03-02 19:22:48.349 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25G:00000002
+2026-03-02 19:22:49.296 +01:00 [INF] GraphQL latestMeasurement query for aquarium aq-1
+2026-03-02 19:22:49.606 +01:00 [INF] Applying EF Core migrations for aquarium aq-1
+2026-03-02 19:22:51.926 +01:00 [INF] Executed DbCommand (155ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 19:22:53.675 +01:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2026-03-02 19:22:53.793 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2026-03-02 19:22:53.843 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 19:22:53.912 +01:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-02 19:22:53.964 +01:00 [INF] Querying latest measurement for aquarium aq-1
+2026-03-02 19:22:55.425 +01:00 [INF] Executed DbCommand (82ms) [Parameters=[@__aquariumId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.aquarium_id, m.timestamp, m.temperature, m.mg, m.kh, m.ca, m.ph, m.oxygen, m.pump
+FROM measurements AS m
+WHERE m.aquarium_id = @__aquariumId_0
+ORDER BY m.timestamp DESC
+LIMIT 1
+2026-03-02 19:23:06.061 +01:00 [INF] HTTP POST /graphql responded 200 in 17709.2708 ms
+2026-03-02 19:23:13.251 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25I:00000001
+2026-03-02 19:23:13.485 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 231.9428 ms
+2026-03-02 19:24:49.878 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25G:00000003
+2026-03-02 19:24:49.899 +01:00 [INF] GraphQL latestMeasurement query for aquarium aac238ef-bcf8-42d2-a885-712cb5ff8d16
+2026-03-02 19:24:50.013 +01:00 [INF] Applying EF Core migrations for aquarium aac238ef-bcf8-42d2-a885-712cb5ff8d16
+2026-03-02 19:24:50.553 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 19:24:50.920 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2026-03-02 19:24:50.934 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2026-03-02 19:24:50.951 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-03-02 19:24:50.962 +01:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-02 19:24:51.996 +01:00 [INF] Querying latest measurement for aquarium aac238ef-bcf8-42d2-a885-712cb5ff8d16
+2026-03-02 19:24:52.043 +01:00 [INF] Executed DbCommand (27ms) [Parameters=[@__aquariumId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.aquarium_id, m.timestamp, m.temperature, m.mg, m.kh, m.ca, m.ph, m.oxygen, m.pump
+FROM measurements AS m
+WHERE m.aquarium_id = @__aquariumId_0
+ORDER BY m.timestamp DESC
+LIMIT 1
+2026-03-02 19:24:57.990 +01:00 [INF] HTTP POST /graphql responded 200 in 8107.2313 ms
+2026-03-02 19:25:05.199 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25G:00000004
+2026-03-02 19:25:05.205 +01:00 [INF] GraphQL latestMeasurement query for aquarium aac238ef-bcf8-42d2-a885-712cb5ff8d16
+2026-03-02 19:25:05.209 +01:00 [INF] Querying latest measurement for aquarium aac238ef-bcf8-42d2-a885-712cb5ff8d16
+2026-03-02 19:25:05.243 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__aquariumId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.aquarium_id, m.timestamp, m.temperature, m.mg, m.kh, m.ca, m.ph, m.oxygen, m.pump
+FROM measurements AS m
+WHERE m.aquarium_id = @__aquariumId_0
+ORDER BY m.timestamp DESC
+LIMIT 1
+2026-03-02 19:25:05.249 +01:00 [INF] HTTP POST /graphql responded 200 in 47.2217 ms
+2026-03-02 19:25:13.481 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25I:00000002
+2026-03-02 19:25:13.576 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 93.5653 ms
+2026-03-02 19:36:22.110 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25K:00000001
+2026-03-02 19:36:22.263 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 150.6177 ms
+2026-03-02 19:36:25.303 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25K:00000002
+2026-03-02 19:36:25.324 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 18.2917 ms
+2026-03-02 19:36:28.739 +01:00 [DBG] Correlation ID set to 0HNJOH2OMD25K:00000003
+2026-03-02 19:36:28.762 +01:00 [INF] HTTP GET /service-worker.js responded 304 in 19.4511 ms

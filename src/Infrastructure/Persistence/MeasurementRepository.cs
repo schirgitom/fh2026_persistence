@@ -108,7 +108,7 @@ public sealed class MeasurementRepository : IMeasurementRepository, IMeasurement
 
         _logger.LogInformation("Querying latest measurement for aquarium {AquariumId}", aquariumId);
 
-        return await dbContext.Measurements
+        MeasurementReadModel data = await dbContext.Measurements
             .AsNoTracking()
             .Where(x => x.AquariumId == aquariumId)
             .OrderByDescending(x => x.Timestamp)
@@ -123,5 +123,8 @@ public sealed class MeasurementRepository : IMeasurementRepository, IMeasurement
                 x.Oxygen,
                 x.Pump))
             .FirstOrDefaultAsync(cancellationToken);
+
+
+        return data;
     }
 }
