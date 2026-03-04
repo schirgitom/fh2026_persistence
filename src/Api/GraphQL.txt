@@ -1,0 +1,54 @@
+query {
+  latestMeasurement(aquariumId: "1634f0f6-356c-4860-9f71-f46b91b4b7ff") {
+    aquariumId
+    timestamp
+    temperature
+    mg
+    kh
+    ca
+    ph
+    oxygen
+    pump
+  }
+}
+
+
+query GetAggregates(
+  $aquariumId: ID!
+  $resolution: AggregateResolution!
+  $from: DateTime!
+  $to: DateTime!
+) {
+  aggregates(
+    aquariumId: $aquariumId
+    resolution: $resolution
+    from: $from
+    to: $to
+  ) {
+    bucket
+    avgTemperature
+    minTemperature
+    maxTemperature
+    stdDevTemperature
+    avgPh
+    minPh
+    maxPh
+    stdDevPh
+    avgOxygen
+    minOxygen
+    maxOxygen
+    avgMg
+    avgKh
+    avgCa
+    avgPump
+    maxPump
+  }
+}
+
+
+{
+  "aquariumId": "1634f0f6-356c-4860-9f71-f46b91b4b7ff",
+  "resolution": "FIVE_MINUTES",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-05T00:00:00Z"
+}
