@@ -1,9 +1,12 @@
 using Application.Abstractions.Cqrs;
 using Application.Abstractions.Persistence;
+using Application.Abstractions.Services;
+using Application.Aggregates;
 using Application.Measurements;
 using Infrastructure.Configuration;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Aggregates;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +26,15 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         services.AddScoped<IMeasurementRepository, MeasurementRepository>();
         services.AddScoped<IMeasurementReadRepository, MeasurementRepository>();
+        services.AddScoped<IAggregateReadRepository, AggregateReadRepository>();
+        services.AddScoped<IAggregateQueryService, AggregateQueryService>();
+        services.AddScoped<IContinuousAggregateService, ContinuousAggregateService>();
+        services.AddSingleton<ISqlIdentifierValidator, SqlIdentifierValidator>();
+        services.AddSingleton<ContinuousAggregateSqlBuilder>();
+        services.AddSingleton<IAggregateResolutionStrategy, FiveMinuteAggregateResolutionStrategy>();
+        services.AddSingleton<IAggregateResolutionStrategy, OneHourAggregateResolutionStrategy>();
+        services.AddSingleton<IAggregateResolutionStrategy, OneDayAggregateResolutionStrategy>();
+        services.AddSingleton<IAggregateResolutionStrategyProvider, AggregateResolutionStrategyProvider>();
         services.AddScoped<ICommandHandler<IngestMeasurementCommand>, IngestMeasurementCommandHandler>();
 
         services.AddHostedService<RabbitMqMeasurementConsumer>();
